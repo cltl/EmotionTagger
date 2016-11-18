@@ -1,0 +1,2 @@
+echo "I am really very angry with the government!!!!!! not taking care of things, is it possible a little bit extreme" | java -Xmx1000m -cp ../lib/EmotionTagger-1.0-SNAPSHOT.jar TagTextWithExpressiveness --intensifiers "../resources/intensifiers.txt"  --intensifiers "../resources/weakeners.txt"
+ 
