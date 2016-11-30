@@ -7,7 +7,7 @@ import java.util.Vector;
  */
 public class TagTextWithExpressiveness {
 
-    static final String CAPITALS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static final public String CAPITALS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     static public void main (String[] args) {
         try {
             Vector<String> intensifiers = new Vector<String>();
@@ -35,10 +35,10 @@ public class TagTextWithExpressiveness {
                 }
             }
             if (!pathToWeakeners.isEmpty()) {
-                weakeners = readWordList(pathToWeakeners);
+                weakeners = Expression.readWordList(pathToWeakeners);
             }
             if (!pathToIntensifiers.isEmpty()) {
-                intensifiers = readWordList(pathToIntensifiers);
+                intensifiers = Expression.readWordList(pathToIntensifiers);
             }
             if (!pathToTextFile.isEmpty()){
                 FileInputStream fis = new FileInputStream(pathToTextFile);
@@ -112,23 +112,4 @@ public class TagTextWithExpressiveness {
 
     }
 
-    static Vector<String> readWordList(String pathToFile) {
-        Vector<String>  words = new Vector<String>();
-
-        try {
-            FileInputStream fis = new FileInputStream(pathToFile);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader in = new BufferedReader(isr);
-            String inputLine = "";
-            while (in.ready()&&(inputLine = in.readLine()) != null) {
-                if (inputLine.trim().length()>0) {
-                    words.add(inputLine.trim());
-                }
-            }
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return words;
-    }
 }

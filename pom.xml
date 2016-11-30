@@ -4,9 +4,97 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>EmotionTagger</groupId>
-    <artifactId>EmotionTagger</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.github.cltl</groupId>
+    <artifactId>emotiontagger</artifactId>
+    <version>v1.0</version>
+    <packaging>jar</packaging>
+    <name>EmotionTagger</name>
+    <description>Reads NewsReader NAF files and adds semantic labels to the term layer based on wordnet synsets or on lemmas.
+        Also detects nominal events and assigns FrameNet frames and roles to the SRL layer.</description>
+    <url>http://www.newsreader-project.eu</url>
+    <scm>
+        <connection>scm:git:git@github.com/cltl/EmotionTagger</connection>
+        <developerConnection>scm:git:git@github.com/cltl/EmotionTagger</developerConnection>
+        <url>git@github.com/cltl/EmotionTagger</url>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Piek Vossen</name>
+            <email>piekvossen@gmail.com</email>
+            <organization>VU University Amsterdam</organization>
+            <organizationUrl>http://www.cltl.nl</organizationUrl>
+        </developer>
+    </developers>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <!-- specify compiler settings -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!--
+                             will produce lot of warnings ...
+                             <compilerArgument>-Xlint:all</compilerArgument>
+                         -->
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>ISO-8859-1</encoding>
+                    <showWarnings>true</showWarnings>
+                    <!--
+                             will produce lot of warnings ...
+                             <showDeprecation>true</showDeprecation>
+                         -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifestEntries>
+                            <!-- replace the Module-Interface value by your module class -->
+                            <Module-Interface>vu.emotiontagger</Module-Interface>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id><!-- this is used for inheritance merges -->
+                        <phase>package</phase><!-- append to the packaging phase -->
+                        <goals>
+                            <goal>attached</goal><!-- goals == mojos -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.cltl</groupId>
+            <artifactId>KafSaxParser</artifactId>
+            <version>v3.1.1</version>
+        </dependency>
+    </dependencies>
 </project>

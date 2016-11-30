@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by piek on 12/06/15.
  */
@@ -37,6 +44,48 @@ public class Emotion {
         sadness = 0;
         surprise = 0;
         trust = 0;
+    }
+
+    public ArrayList<String> getEmotionStringArray () {
+        ArrayList<String> emotions = new ArrayList<String>();
+        if (anger>0) emotions.add("anger");
+        if (anticipation>0) emotions.add("anticipation");
+        if (disgust>0) emotions.add("disgust");
+        if (fear>0) emotions.add("fear");
+        if (joy>0) emotions.add("joy");
+        if (negative>0) emotions.add("negative");
+        if (positive>0) emotions.add("positive");
+        if (sadness>0) emotions.add("sadness");
+        if (surprise>0) emotions.add("surprise");
+        if (trust>0) emotions.add("trust");
+        return emotions;
+    }
+    public ArrayList<String> getDominantEmotions () {
+        ArrayList<String> emo = new ArrayList<String>();
+        int top = 0;
+        if (anger>top) top = anger;
+        if (anticipation>top) top = anticipation;
+        if (disgust>top) top = disgust;
+        if (fear>top) top = fear;
+        if (joy>top) top = joy;
+        if (negative>top) top = negative;
+        if (positive>top) top = positive;
+        if (sadness>top) top = sadness;
+        if (surprise>top) top = surprise;
+        if (trust>top) top = trust;
+        if (top>0) {
+            if (anger == top) emo.add("anger");
+            if (anticipation == top) emo.add("anticipation");
+            if (disgust == top) emo.add("disgust");
+            if (fear == top) emo.add("fear");
+            if (joy == top) emo.add("joy");
+            if (negative == top) emo.add("negative");
+            if (positive == top) emo.add("positive");
+            if (sadness == top) emo.add("sadness");
+            if (surprise == top) emo.add("surprise");
+            if (trust == top) emo.add("trust");
+        }
+        return emo;
     }
 
     public void setEmotion(String emotionString, int value) {
@@ -103,6 +152,40 @@ public class Emotion {
         else if (emotionString.equalsIgnoreCase("trust")) {
             trust++;
         }
+    }
+
+    public int getEmotion(String emotionString) {
+        if (emotionString.equalsIgnoreCase("anger")) {
+            return anger;
+        }
+        else if (emotionString.equalsIgnoreCase("anticipation")) {
+            return anticipation;
+        }
+        else if (emotionString.equalsIgnoreCase("disgust")) {
+            return disgust;
+        }
+        else if (emotionString.equalsIgnoreCase("fear")) {
+            return fear;
+        }
+        else if (emotionString.equalsIgnoreCase("joy")) {
+            return joy;
+        }
+        else if (emotionString.equalsIgnoreCase("negative")) {
+            return negative;
+        }
+        else if (emotionString.equalsIgnoreCase("positive")) {
+            return positive;
+        }
+        else if (emotionString.equalsIgnoreCase("sadness")) {
+            return sadness;
+        }
+        else if (emotionString.equalsIgnoreCase("surprise")) {
+            return surprise;
+        }
+        else if (emotionString.equalsIgnoreCase("trust")) {
+            return trust;
+        }
+        return -1;
     }
 
     public void addEmotion(Emotion emotion) {
@@ -216,5 +299,51 @@ public class Emotion {
         return str;
     }
 
-
+    static HashMap<String, Emotion> readEmotionLexicon(String pathToFile) {
+        HashMap<String, Emotion> emotionHashMap = new HashMap<String, Emotion>();
+        /**
+         * abhorrent	disgust	1
+         abhorrent	fear	1
+         abhorrent	joy	0
+         abhorrent	negative	1
+         abhorrent	positive	0
+         abhorrent	sadness	0
+         abhorrent	surprise	0
+         abhorrent	trust	0
+         */
+        try {
+            FileInputStream fis = new FileInputStream(pathToFile);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader in = new BufferedReader(isr);
+            String inputLine = "";
+            while (in.ready()&&(inputLine = in.readLine()) != null) {
+                if (inputLine.trim().length()>0) {
+                    String [] fields = inputLine.split("\t");
+                    if (fields.length==3) {
+                        String word = fields[0].trim();
+                        String emotionString = fields[1].trim();
+                        try {
+                            int value = Integer.parseInt(fields[2].trim());
+                            if (emotionHashMap.containsKey(word)) {
+                                Emotion emotion = emotionHashMap.get(word);
+                                emotion.setEmotion(emotionString, value);
+                                emotionHashMap.put(word, emotion);
+                            }
+                            else {
+                                Emotion emotion = new Emotion();
+                                emotion.setEmotion(emotionString, value);
+                                emotionHashMap.put(word, emotion);
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return emotionHashMap;
+    }
 }

@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Vector;
+
 /**
  * Created by piek on 12/06/15.
  */
@@ -72,6 +78,32 @@ public class Expression {
         str += "\"intensifiers\":\""+getnIntensifiers()+"\"";
         str += "]";
         return str;
+    }
+
+    public int getStrength () {
+        int s = 0;
+        s += nCapitals+nIntensifiers+nExclamation-nWeakeners;
+        return s;
+    }
+
+    static Vector<String> readWordList(String pathToFile) {
+        Vector<String>  words = new Vector<String>();
+
+        try {
+            FileInputStream fis = new FileInputStream(pathToFile);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader in = new BufferedReader(isr);
+            String inputLine = "";
+            while (in.ready()&&(inputLine = in.readLine()) != null) {
+                if (inputLine.trim().length()>0) {
+                    words.add(inputLine.trim());
+                }
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return words;
     }
 
 
