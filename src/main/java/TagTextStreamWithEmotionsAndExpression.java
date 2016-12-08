@@ -6,6 +6,7 @@ import java.util.Vector;
  * Created by piek on 07/12/2016.
  */
 public class TagTextStreamWithEmotionsAndExpression {
+    static final public String CAPITALS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     static public void main (String[] args) {
                 HashMap<String, Emotion> emotionHashMap = new HashMap<String, Emotion>();
@@ -41,7 +42,7 @@ public class TagTextStreamWithEmotionsAndExpression {
                     }*/
                 }
 
-                //System.out.println("text = " + text);
+                System.out.print("[\"" + text+"\"]");
                 if (!pathToWeakeners.isEmpty()) {
                     weakeners = Expression.readWordList(pathToWeakeners);
                 }
@@ -76,6 +77,21 @@ public class TagTextStreamWithEmotionsAndExpression {
                         textExpression.incrementWeakeners();
                     }
 
+                    ///check for "!" and capitals
+                    nextWord = words[i].trim();
+                    for (int j = 0; j < nextWord.length(); j++) {
+                        String character = nextWord.substring(j, j + 1);
+                        if (character.equals("!")) {
+                            textExpression.incrementExclamation();
+                        }
+                        else {
+                            if (j>0) {
+                                if (CAPITALS.indexOf(character) > -1) {
+                                    textExpression.incrementCapitals();
+                                }
+                            }
+                        }
+                    }
                 }
                 System.out.print(textExpression.toString()+textEmotion.toString());
                 //System.out.print(textEmotion.toString());
