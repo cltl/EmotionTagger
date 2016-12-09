@@ -1,3 +1,6 @@
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -67,6 +70,16 @@ public class Expression {
 
     public void incrementWeakeners() {
         this.nWeakeners++;
+    }
+
+
+    public JSONObject toJSONObject() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("exclamation", getnExclamation());
+        jsonObject.put("capitals", getnCapitals());
+        jsonObject.put("weakeners", getnWeakeners());
+        jsonObject.put("intensifiers", getnIntensifiers());
+        return jsonObject;
     }
 
     public String toString () {

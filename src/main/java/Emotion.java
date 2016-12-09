@@ -1,3 +1,7 @@
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -280,6 +284,22 @@ public class Emotion {
 
     public void setTrust(int trust) {
         this.trust = trust;
+    }
+
+
+    public JSONObject toJSONObject() throws JSONException {
+        JSONObject jsObject = new JSONObject();
+        jsObject.put("anger", getAnger());
+        jsObject.put("anticipation", getAnticipation());
+        jsObject.put("disgust", getDisgust());
+        jsObject.put("fear", getFear());
+        jsObject.put("joy", getJoy());
+        jsObject.put("sadness", getSadness());
+        jsObject.put("surprise", getSurprise());
+        jsObject.put("trust", getTrust());
+        jsObject.put("positive", getPositive());
+        jsObject.put("negative", getNegative());
+        return jsObject;
     }
 
     public String toString () {

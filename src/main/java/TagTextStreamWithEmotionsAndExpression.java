@@ -1,3 +1,6 @@
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
@@ -42,7 +45,7 @@ public class TagTextStreamWithEmotionsAndExpression {
                     }*/
                 }
 
-                System.out.print("[\"" + text+"\"]");
+               // System.out.print("[\"" + text+"\"]");
                 if (!pathToWeakeners.isEmpty()) {
                     weakeners = Expression.readWordList(pathToWeakeners);
                 }
@@ -93,8 +96,15 @@ public class TagTextStreamWithEmotionsAndExpression {
                         }
                     }
                 }
-                System.out.print(textExpression.toString()+textEmotion.toString());
-                //System.out.print(textEmotion.toString());
+        try {
+            JSONObject json = new JSONObject();
+            json.append("emotion", textEmotion.toJSONObject());
+            json.append("expression", textExpression.toJSONObject());
+            System.out.print(json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //System.out.print(textEmotion.toString());
         }
 
 
