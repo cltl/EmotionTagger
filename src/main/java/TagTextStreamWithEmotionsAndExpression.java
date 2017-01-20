@@ -15,6 +15,18 @@ public class TagTextStreamWithEmotionsAndExpression {
                 HashMap<String, Emotion> emotionHashMap = new HashMap<String, Emotion>();
                 Vector<String> intensifiers = new Vector<String>();
                 Vector<String> weakeners = new Vector<String>();
+                Vector<String> shifters = new Vector<String>();
+                shifters.add("not");
+                shifters.add("no");
+                shifters.add("never");
+                shifters.add("deny");
+                shifters.add("denial");
+                shifters.add("aint");
+                shifters.add("donot");
+                shifters.add("doesnt");
+                shifters.add("doesnot");
+                shifters.add("wont");
+                shifters.add("wouldnot");
                 String pathToIntensifiers = "";
                 String pathToWeakeners = "";
                 String pathToEmotionLexicon = "";
@@ -25,7 +37,7 @@ public class TagTextStreamWithEmotionsAndExpression {
                     pathToIntensifiers = "../resources/intensifiers.txt";
                     pathToWeakeners = "../resources/weakeners.txt";
                     pathToEmotionLexicon = "/Code/vu/EmotionTagger/release/resources/NRC-emotion-lexicon-wordlevel-alphabetized-v0.92.txt";
-                    text = "I am really angry with the government not taking care of things";
+                    text = "I am really not angry with the government not taking care of things";
                 }
                 else {
                     for (int i = 0; i < args.length; i++) {
@@ -78,6 +90,10 @@ public class TagTextStreamWithEmotionsAndExpression {
 
                     if (weakeners.contains(nextWord)) {
                         textExpression.incrementWeakeners();
+                    }
+
+                    if (shifters.contains(nextWord)) {
+                        textExpression.incrementShifters();
                     }
 
                     ///check for "!" and capitals

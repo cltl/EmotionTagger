@@ -16,6 +16,7 @@ public class Expression {
     private int nIntensifiers;
     private int nWeakeners;
     private int nCapitals;
+    private int nShifters;
 
 
     public Expression() {
@@ -23,6 +24,7 @@ public class Expression {
         nIntensifiers = 0;
         nWeakeners = 0;
         nCapitals = 0;
+        nShifters = 0;
     }
 
     public int getnCapitals() {
@@ -72,6 +74,17 @@ public class Expression {
         this.nWeakeners++;
     }
 
+    public int getnShifters() {
+        return nShifters;
+    }
+
+    public void setnShifters(int nShifters) {
+        this.nShifters = nShifters;
+    }
+
+    public void incrementShifters() {
+        this.nShifters++;
+    }
 
     public JSONObject toJSONObject() throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -79,6 +92,7 @@ public class Expression {
         jsonObject.put("capitals", getnCapitals());
         jsonObject.put("weakeners", getnWeakeners());
         jsonObject.put("intensifiers", getnIntensifiers());
+        jsonObject.put("shifters", getnShifters());
         return jsonObject;
     }
 
@@ -89,6 +103,7 @@ public class Expression {
         str += "\"capitals\":\""+getnCapitals()+"\",";
         str += "\"weakeners\":\""+getnWeakeners()+"\",";
         str += "\"intensifiers\":\""+getnIntensifiers()+"\"";
+        str += "\"shifters\":\""+getnShifters()+"\"";
         str += "]";
         return str;
     }
