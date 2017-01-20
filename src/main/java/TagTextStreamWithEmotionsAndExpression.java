@@ -29,13 +29,15 @@ public class TagTextStreamWithEmotionsAndExpression {
                 shifters.add("wouldnot");
                 String pathToIntensifiers = "";
                 String pathToWeakeners = "";
+                String pathToPolarityShifters = "";
                 String pathToEmotionLexicon = "";
                 String text = "";
-                text = "I am really angry with the government not taking care of things";
+                text = "I am really very angry with the government not taking care of things";
                 Scanner scanner =null;
                 if (args.length==0) {
-                    pathToIntensifiers = "../resources/intensifiers.txt";
-                    pathToWeakeners = "../resources/weakeners.txt";
+                    pathToIntensifiers = "/Code/vu/EmotionTagger/release/resources/intensifiers.txt";
+                    pathToWeakeners = "/Code/vu/EmotionTagger/release/resources/weakeners.txt";
+                    pathToPolarityShifters = "/Code/vu/EmotionTagger/release/resources/polarity_shifters.txt";
                     pathToEmotionLexicon = "/Code/vu/EmotionTagger/release/resources/NRC-emotion-lexicon-wordlevel-alphabetized-v0.92.txt";
                     text = "I am really not angry with the government not taking care of things";
                 }
@@ -48,6 +50,8 @@ public class TagTextStreamWithEmotionsAndExpression {
                             pathToIntensifiers = args[i + 1];
                         } else if (arg.equals("--weakeners") && args.length > (i + 1)) {
                             pathToWeakeners = args[i + 1];
+                        } else if (arg.equals("--shifters") && args.length > (i + 1)) {
+                            pathToPolarityShifters = args[i + 1];
                         }
                     }
                     scanner = new Scanner(System.in);
@@ -63,6 +67,9 @@ public class TagTextStreamWithEmotionsAndExpression {
                 }
                 if (!pathToIntensifiers.isEmpty()) {
                     intensifiers = Expression.readWordList(pathToIntensifiers);
+                }
+                if (!pathToPolarityShifters.isEmpty()) {
+                    shifters = Expression.readWordList(pathToPolarityShifters);
                 }
 
                 //noinspection Since15
@@ -81,7 +88,6 @@ public class TagTextStreamWithEmotionsAndExpression {
                         Emotion wordEmotion = emotionHashMap.get(nextWord);
                         textEmotion.addEmotion(wordEmotion);
                     }
-
 
                     if (intensifiers.contains(nextWord)) {
                         textExpression.incrementIntensifiers();
