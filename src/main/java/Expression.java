@@ -129,7 +129,8 @@ public class Expression {
             }
             in.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not find the file = " + pathToFile);
+           // e.printStackTrace();
         }
         return words;
     }
